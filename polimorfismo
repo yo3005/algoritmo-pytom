@@ -1,0 +1,103 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Clase base Vehiculo
+class Vehiculo {
+public:
+    // Constructor de la clase Vehiculo
+    Vehiculo(string marca, string modelo) : marca_(marca), modelo_(modelo) {}
+
+    // Método virtual para obtener una descripción del vehículo
+    virtual void describir() const {
+        cout << "Vehiculo: Marca - " << marca_ << ", Modelo - " << modelo_ << endl;
+    }
+
+protected:
+    string marca_;
+    string modelo_;
+};
+
+// Subclase Auto
+class Auto : public Vehiculo {
+public:
+    // Constructor de la clase Auto
+    Auto(string marca, string modelo, int puertas) : Vehiculo(marca, modelo), puertas_(puertas) {}
+
+    // Implementación del método describir para Auto
+    void describir() const override {
+        cout << "Auto: Marca - " << marca_ << ", Modelo - " << modelo_ << ", Puertas - " << puertas_ << endl;
+    }
+
+private:
+    int puertas_;
+};
+
+// Subclase Moto
+class Moto : public Vehiculo {
+public:
+    // Constructor de la clase Moto
+    Moto(string marca, string modelo, string tipo) : Vehiculo(marca, modelo), tipo_(tipo) {}
+
+    // Implementación del método describir para Moto
+    void describir() const override {
+        cout << "Moto: Marca - " << marca_ << ", Modelo - " << modelo_ << ", Tipo - " << tipo_ << endl;
+    }
+
+private:
+    string tipo_;
+};
+
+// Subclase Camion
+class Camion : public Vehiculo {
+public:
+    // Constructor de la clase Camion
+    Camion(string marca, string modelo, int capacidadCarga) : Vehiculo(marca, modelo), capacidadCarga_(capacidadCarga) {}
+
+    // Implementación del método describir para Camion
+    void describir() const override {
+        cout << "Camion: Marca - " << marca_ << ", Modelo - " << modelo_ << ", Capacidad de carga - " << capacidadCarga_ << " kg" << endl;
+    }
+
+private:
+    int capacidadCarga_;
+};
+
+// Subclase Bicicleta
+class Bicicleta : public Vehiculo {
+public:
+    // Constructor de la clase Bicicleta
+    Bicicleta(string marca, string modelo, string tipo) : Vehiculo(marca, modelo), tipo_(tipo) {}
+
+    // Implementación del método describir para Bicicleta
+    void describir() const override {
+        cout << "Bicicleta: Marca - " << marca_ << ", Modelo - " << modelo_ << ", Tipo - " << tipo_ << endl;
+    }
+
+private:
+    string tipo_;
+};
+
+int main() {
+    // Creamos un arreglo de punteros a Vehiculo para almacenar objetos de las subclases
+    Vehiculo* vehiculos[5];
+
+    // Creamos instancias de cada tipo de vehículo y asignamos a los punteros
+    vehiculos[0] = new Auto("Toyota", "Corolla", 4);
+    vehiculos[1] = new Moto("Honda", "CBR650R", "Deportiva");
+    vehiculos[2] = new Camion("Volvo", "VNL 860", 25000);
+    vehiculos[3] = new Bicicleta("Trek", "FX 2", "Montaña");
+    vehiculos[4] = new Vehiculo("Ford", "Focus"); // Clase base
+
+    // Utilizamos el polimorfismo para describir cada vehículo
+    for (int i = 0; i < 5; i++) {
+        vehiculos[i]->describir();
+    }
+
+    // Liberamos la memoria asignada a los objetos creados con "new"
+    for (int i = 0; i < 5; i++) {
+        delete vehiculos[i];
+    }
+
+    return 0;
+}
